@@ -2,36 +2,19 @@
 import React, { useState } from "react";
 import { ThemeProvider } from "styled-components";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import styled from "styled-components";
-import Menu from "./components/Menu";
-import Navbar from "./components/Navbar";
+import MainLayout from "./MainLayout";
 import Home from "./pages/Home";
 import Video from "./pages/Video";
 import SignIn from "./pages/SignIn";
 import { darkTheme, lightTheme } from "./utils/Theme";
-import Shorts from "./pages/Shorts"; // Import the Shorts component
-
-const Container = styled.div`
-  display: flex;
-  width: 100%;
-  overflow-x: hidden;
-`;
-
-const Main = styled.div`
-  flex: 1;
-  background-color: ${({ theme }) => theme.bg};
-  margin-left: 240px; // Leave space for the fixed Menu
-  @media (max-width: 768px) {
-    margin-left: 0;
-  }
-`;
-
-const Wrapper = styled.div`
-  padding: 22px 20px;
-  @media (max-width: 1024px) {
-    padding: 10px 10px;
-  }
-`;
+import Shorts from "./pages/Shorts";
+import Subscriptions from "./pages/Subscriptions";
+import YouProfile from "./pages/YouProfile";
+import YourChannel from "./pages/YourChannel";
+import History from "./pages/History";
+import Playlists from "./pages/Playlists";
+import YourVideos from "./pages/YourVideos";
+import Navbar from "./components/Navbar"; // Import the Navbar component
 
 const App = () => {
   const [darkMode, setDarkMode] = useState(true);
@@ -39,20 +22,28 @@ const App = () => {
   return (
     <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
       <BrowserRouter>
-        <Container>
-          <Menu darkMode={darkMode} setDarkMode={setDarkMode} />
-          <Main>
-            <Navbar />
-            <Wrapper>
-              <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/signin" element={<SignIn />} />
-                <Route path="/video/:id" element={<Video />} />
-                <Route path="/shorts" element={<Shorts />} />
-              </Routes>
-            </Wrapper>
-          </Main>
-        </Container>
+        <Routes>
+          <Route element={<MainLayout darkMode={darkMode} setDarkMode={setDarkMode} />}>
+            <Route path="/" element={<Home />} />
+            <Route path="/signin" element={<SignIn />} />
+            <Route path="/video/:id" element={<Video />} />
+            <Route path="/shorts" element={<Shorts />} />
+            <Route path="/subscriptions" element={<Subscriptions />} />
+            <Route path="/you" element={<YouProfile />} />
+            <Route path="/yourchannel" element={<YourChannel />} />
+            <Route path="/history" element={<History />} />
+            <Route path="/playlists" element={<Playlists />} />
+          </Route>
+          <Route
+            path="/yourvideos"
+            element={
+              <>
+                <Navbar /> {/* Include the Navbar for YourVideos */}
+                <YourVideos />
+              </>
+            }
+          />
+        </Routes>
       </BrowserRouter>
     </ThemeProvider>
   );

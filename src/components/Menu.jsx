@@ -1,3 +1,4 @@
+// Menu.jsx
 import React, { useState } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
@@ -216,39 +217,43 @@ const Menu = ({ darkMode, setDarkMode }) => {
                 Shorts
               </Item>
             </Link>
-            <Item>
-              <ExploreIcon />
-              Explore
-            </Item>
-            <Item>
-              <SubscriptionsIcon />
-              Subscriptions
-            </Item>
-            <Item>
-              <VideoLibraryIcon />
-              Library
-            </Item>
-            <Item>
-              <HistoryIcon />
-              History
-            </Item>
-            <Hr />
-            <Item>
-              <ExpandMoreIcon />
-              You
-            </Item>
-            <Item>
-              <AccountCircleIcon />
-              Your Channel
-            </Item>
-            <Item>
-              <PlaylistPlayIcon />
-              Playlists
-            </Item>
-            <Item>
-              <VideoCameraBackIcon />
-              Your Videos
-            </Item>
+            <Link to="/subscriptions" style={{ textDecoration: 'none', color: 'inherit' }}>
+              <Item>
+                <SubscriptionsIcon />
+                Subscriptions
+              </Item>
+            </Link>
+
+            <Link to="/you" style={{ textDecoration: 'none', color: 'inherit' }}>
+              <Item>
+                <ExpandMoreIcon />
+                You
+              </Item>
+            </Link>
+            <Link to="/yourchannel" style={{ textDecoration: 'none', color: 'inherit' }}>
+              <Item>
+                <AccountCircleIcon />
+                Your Channel
+              </Item>
+            </Link>
+            <Link to="/history" style={{ textDecoration: 'none', color: 'inherit' }}>
+              <Item>
+                <HistoryIcon />
+                History
+              </Item>
+            </Link>
+            <Link to="/playlists" style={{ textDecoration: 'none', color: 'inherit' }}>
+              <Item>
+                <PlaylistPlayIcon />
+                Playlists
+              </Item>
+            </Link>
+            <Link to="/yourvideos" style={{ textDecoration: "none", color: "inherit" }}>
+              <Item>
+                <VideoCameraBackIcon />
+                Your Videos
+              </Item>
+            </Link>
             <Item>
               <WatchLaterIcon />
               Watch Later
