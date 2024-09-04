@@ -15,6 +15,7 @@ import History from "./pages/History";
 import Playlists from "./pages/Playlists";
 import YourVideos from "./pages/YourVideos";
 import Navbar from "./components/Navbar"; // Import the Navbar component
+import Dashboard from "./components/Dashboard"; // Import the Dashboard component
 
 const App = () => {
   const [darkMode, setDarkMode] = useState(true);
@@ -33,6 +34,8 @@ const App = () => {
             <Route path="/yourchannel" element={<YourChannel />} />
             <Route path="/history" element={<History />} />
             <Route path="/playlists" element={<Playlists />} />
+            <Route path="/yourvideos/dashboard" element={<Dashboard />} /> {/* Add the Dashboard route */}
+
           </Route>
           <Route
             path="/yourvideos"

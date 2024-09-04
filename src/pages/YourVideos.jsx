@@ -1,4 +1,3 @@
-// YourVideos.jsx
 import React, { useState } from "react";
 import styled from "styled-components";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -13,14 +12,17 @@ import BuildIcon from "@mui/icons-material/Build";
 import AudiotrackIcon from "@mui/icons-material/Audiotrack";
 import SettingsIcon from "@mui/icons-material/Settings";
 import FeedbackIcon from "@mui/icons-material/Feedback";
+import FilterListIcon from "@mui/icons-material/FilterList";
+import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import Submenu from "../components/Submenu"; // Import the Submenu component
-
+import { useNavigate } from "react-router-dom"; // Add this import
+import SideMenu1 from "../components/SideMenu1";
 const Container = styled.div`
   display: flex;
 `;
 
 const SideMenu = styled.div`
-  width: ${({ collapsed }) => (collapsed ? "60px" : "240px")};
+  width: ${({ collapsed }) => (collapsed ? "60px" : "200px")}; /* Adjust width when collapsed */
   background-color: ${({ theme }) => theme.bgLighter};
   height: 100vh;
   padding: 20px;
@@ -91,7 +93,7 @@ const MenuText = styled.div`
 
 const Content = styled.div`
   flex: 1;
-  margin-left: ${({ collapsed }) => (collapsed ? "60px" : "240px")}; /* Adjust for sidebar */
+  margin-left: ${({ collapsed }) => (collapsed ? "80px" : "220px")}; /* Adjust margin-left */
   padding: 20px;
   transition: margin-left 0.3s ease;
 `;
@@ -106,8 +108,95 @@ const CollapseButton = styled.div`
   width: 100%;
 `;
 
+const FilterSection = styled.div`
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+`;
+
+const FilterButton = styled.div`
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  padding: 10px;
+  border: 1px solid ${({ theme }) => theme.soft};
+  border-radius: 5px;
+  margin-right: 20px;
+  &:hover {
+    background-color: ${({ theme }) => theme.soft};
+  }
+`;
+
+const FilterDropdown = styled.select`
+  padding: 10px;
+  border: 1px solid ${({ theme }) => theme.soft};
+  border-radius: 5px;
+  color: ${({ theme }) => theme.text};
+  background-color: ${({ theme }) => theme.bgLighter};
+`;
+
+const VideoOptionsSection = styled.div`
+  display: flex;
+  align-items: center;
+  padding: 10px 0;
+  margin-top: 20px;
+  border: 1px solid ${({ theme }) => theme.soft};
+  border-radius: 5px;
+`;
+
+const CheckBox = styled(CheckBoxOutlineBlankIcon)`
+  margin-right: 10px;
+  cursor: pointer;
+
+`;
+
+const Option = styled.div`
+  margin-right: 20px;
+  color: ${({ theme }) => theme.text};
+`;
+
+const HorizontalLine = styled.div`
+  height: 1px;
+  background-color: ${({ theme }) => theme.soft};
+  flex: 1;
+`;
+
+const NoVideosSection = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 40px;
+`;
+
+const NoVideosImage = styled.div`
+  width: 150px;
+  height: 150px;
+  background-color: ${({ theme }) => theme.soft};
+  border-radius: 10px;
+  margin-bottom: 20px;
+`;
+
+const NoVideosText = styled.div`
+  font-size: 18px;
+  color: ${({ theme }) => theme.textSoft};
+  margin-bottom: 20px;
+`;
+
+const UploadButton = styled.button`
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: ${({ theme }) => theme.primary};
+  color: white;
+  cursor: pointer;
+  &:hover {
+    background-color: ${({ theme }) => theme.primaryDark};
+  }
+`;
+
 const YourVideos = () => {
   const [collapsed, setCollapsed] = useState(false);
+  const navigate = useNavigate(); // Initialize the useNavigate hook
 
   const toggleCollapse = () => {
     setCollapsed(!collapsed);
@@ -115,86 +204,56 @@ const YourVideos = () => {
 
   return (
     <Container>
-      <SideMenu collapsed={collapsed}>
-        <CollapseButton collapsed={collapsed} onClick={toggleCollapse}>
-          <MenuIcon />
-        </CollapseButton>
+      <Content>
+      <SideMenu1/>
+
         <ProfileSection collapsed={collapsed}>
           <ProfilePicture>A</ProfilePicture> {/* Initial for profile */}
           <ChannelName>Your Channel</ChannelName>
           <ProfileName>Your Name</ProfileName>
         </ProfileSection>
-        <MenuItem>
-          <MenuIconWrapper collapsed={collapsed}>
-            <DashboardIcon />
-          </MenuIconWrapper>
-          <MenuText collapsed={collapsed}>Dashboard</MenuText>
-        </MenuItem>
-        <MenuItem>
-          <MenuIconWrapper collapsed={collapsed}>
-            <VideoLibraryIcon />
-          </MenuIconWrapper>
-          <MenuText collapsed={collapsed}>Content</MenuText>
-        </MenuItem>
-        <MenuItem>
-          <MenuIconWrapper collapsed={collapsed}>
-            <AnalyticsIcon />
-          </MenuIconWrapper>
-          <MenuText collapsed={collapsed}>Analytics</MenuText>
-        </MenuItem>
-        <MenuItem>
-          <MenuIconWrapper collapsed={collapsed}>
-            <CommentIcon />
-          </MenuIconWrapper>
-          <MenuText collapsed={collapsed}>Comments</MenuText>
-        </MenuItem>
-        <MenuItem>
-          <MenuIconWrapper collapsed={collapsed}>
-            <SubtitlesIcon />
-          </MenuIconWrapper>
-          <MenuText collapsed={collapsed}>Subtitles</MenuText>
-        </MenuItem>
-        <MenuItem>
-          <MenuIconWrapper collapsed={collapsed}>
-            <CopyrightIcon />
-          </MenuIconWrapper>
-          <MenuText collapsed={collapsed}>Copyright</MenuText>
-        </MenuItem>
-        <MenuItem>
-          <MenuIconWrapper collapsed={collapsed}>
-            <MonetizationOnIcon />
-          </MenuIconWrapper>
-          <MenuText collapsed={collapsed}>Earn</MenuText>
-        </MenuItem>
-        <MenuItem>
-          <MenuIconWrapper collapsed={collapsed}>
-            <BuildIcon />
-          </MenuIconWrapper>
-          <MenuText collapsed={collapsed}>Customization</MenuText>
-        </MenuItem>
-        <MenuItem>
-          <MenuIconWrapper collapsed={collapsed}>
-            <AudiotrackIcon />
-          </MenuIconWrapper>
-          <MenuText collapsed={collapsed}>Audio Library</MenuText>
-        </MenuItem>
-        <MenuItem>
-          <MenuIconWrapper collapsed={collapsed}>
-            <SettingsIcon />
-          </MenuIconWrapper>
-          <MenuText collapsed={collapsed}>Settings</MenuText>
-        </MenuItem>
-        <MenuItem>
-          <MenuIconWrapper collapsed={collapsed}>
-            <FeedbackIcon />
-          </MenuIconWrapper>
-          <MenuText collapsed={collapsed}>Send Feedback</MenuText>
-        </MenuItem>
-      </SideMenu>
-      <Content collapsed={collapsed}>
+
         <Submenu /> {/* Add the Submenu at the top */}
         <h1>Your Videos</h1>
-        {/* Add content management functionality here */}
+
+        {/* Filter Section */}
+        <FilterSection>
+          <FilterButton>
+            <FilterListIcon />
+            <span>Filter Categories</span>
+          </FilterButton>
+          <FilterDropdown>
+            <option value="" disabled selected>
+              Filter
+            </option>
+            <option value="age-restriction">Age Restriction</option>
+            <option value="copyright">Copyright</option>
+            <option value="description">Description</option>
+            <option value="made-for-kids">Made for Kids</option>
+            <option value="title">Title</option>
+            <option value="views">Views</option>
+            <option value="visibility">Visibility</option>
+          </FilterDropdown>
+        </FilterSection>
+
+        {/* Video Options Section */}
+        <VideoOptionsSection>
+          <CheckBox />
+          <Option>Video Restrictions</Option>
+          <HorizontalLine />
+          <Option>Date</Option>
+          <Option>Views</Option>
+          <Option>Comments</Option>
+          <Option>Likes/Dislikes</Option>
+        </VideoOptionsSection>
+
+        {/* No Videos Section */}
+        <NoVideosSection>
+          <NoVideosImage /> {/* Placeholder for image */}
+          <NoVideosText>No videos uploaded yet</NoVideosText>
+          <UploadButton>Upload Videos</UploadButton>
+        </NoVideosSection>
+
       </Content>
     </Container>
   );
