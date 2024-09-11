@@ -14,9 +14,11 @@ import SettingsIcon from "@mui/icons-material/Settings";
 import FeedbackIcon from "@mui/icons-material/Feedback";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
-import Submenu from "../components/Submenu"; // Import the Submenu component
+import ContentPage from "../pages/ContentPage"; // Import the Submenu component
 import { useNavigate } from "react-router-dom"; // Add this import
 import SideMenu1 from "../components/SideMenu1";
+
+
 const Container = styled.div`
   display: flex;
 `;
@@ -205,7 +207,7 @@ const YourVideos = () => {
   return (
     <Container>
       <Content>
-      <SideMenu1/>
+
 
         <ProfileSection collapsed={collapsed}>
           <ProfilePicture>A</ProfilePicture> {/* Initial for profile */}
@@ -213,7 +215,7 @@ const YourVideos = () => {
           <ProfileName>Your Name</ProfileName>
         </ProfileSection>
 
-        <Submenu /> {/* Add the Submenu at the top */}
+        <ContentPage/> {/* Add the Submenu at the top */}
         <h1>Your Videos</h1>
 
         {/* Filter Section */}

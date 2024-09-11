@@ -1,10 +1,14 @@
 // Dashboard.jsx
 import React from "react";
 import styled from "styled-components";
-import SideMenu1 from "../components/SideMenu1"; // Import the SideMenu component
 
 const Container = styled.div`
   padding: 20px;
+`;
+const Content = styled.div`
+  flex: 1;
+  padding: 20px;
+  margin-left: 220px; /* Adjust this value to match the width of your SideMenu */
 `;
 
 const Section = styled.div`
@@ -86,43 +90,44 @@ const VideoStats = styled.div`
 const Dashboard = () => {
   return (
     <Container>
-       <SideMenu1 />
-      <Section>
-        <SectionTitle>Channel Analytics</SectionTitle>
-        <StatCard>
-          <StatItem>
-            <StatValue>24.5K</StatValue>
-            <StatLabel>Subscribers</StatLabel>
-          </StatItem>
-          <StatItem>
-            <StatValue>1.2M</StatValue>
-            <StatLabel>Views</StatLabel>
-          </StatItem>
-          <StatItem>
-            <StatValue>350</StatValue>
-            <StatLabel>Videos</StatLabel>
-          </StatItem>
-        </StatCard>
-        <Graph />
-      </Section>
-      <Section>
-        <SectionTitle>Latest Videos</SectionTitle>
-        <VideoList>
-          <VideoItem>
-            <VideoInfo>
-              <VideoTitle>How to Build a YouTube Clone</VideoTitle>
-              <VideoStats>1.5K views • 2 days ago</VideoStats>
-            </VideoInfo>
-          </VideoItem>
-          <VideoItem>
-            <VideoInfo>
-              <VideoTitle>Understanding React Hooks</VideoTitle>
-              <VideoStats>3K views • 5 days ago</VideoStats>
-            </VideoInfo>
-          </VideoItem>
-          {/* Add more VideoItems as needed */}
-        </VideoList>
-      </Section>
+      <Content>
+        <Section>
+          <SectionTitle>Channel Analytics</SectionTitle>
+          <StatCard>
+            <StatItem>
+              <StatValue>24.5K</StatValue>
+              <StatLabel>Subscribers</StatLabel>
+            </StatItem>
+            <StatItem>
+              <StatValue>1.2M</StatValue>
+              <StatLabel>Views</StatLabel>
+            </StatItem>
+            <StatItem>
+              <StatValue>350</StatValue>
+              <StatLabel>Videos</StatLabel>
+            </StatItem>
+          </StatCard>
+          <Graph />
+        </Section>
+        <Section>
+          <SectionTitle>Latest Videos</SectionTitle>
+          <VideoList>
+            <VideoItem>
+              <VideoInfo>
+                <VideoTitle>How to Build a YouTube Clone</VideoTitle>
+                <VideoStats>1.5K views • 2 days ago</VideoStats>
+              </VideoInfo>
+            </VideoItem>
+            <VideoItem>
+              <VideoInfo>
+                <VideoTitle>Understanding React Hooks</VideoTitle>
+                <VideoStats>3K views • 5 days ago</VideoStats>
+              </VideoInfo>
+            </VideoItem>
+            {/* Add more VideoItems as needed */}
+          </VideoList>
+        </Section>
+      </Content>
     </Container>
   );
 };
