@@ -12,12 +12,13 @@ import YouProfile from "./pages/YouProfile";
 import YourChannel from "./pages/YourChannel";
 import History from "./pages/History";
 import Playlists from "./pages/Playlists";
-import YourVideos from "./pages/YourVideos";
 import Navbar from "./components/Navbar";
 import Dashboard from "./components/Dashboard";
 import Menu from './components/Menu'; // Main menu
 import SideMenu1 from './components/SideMenu1'; // Side menu for 'Your Videos'
 import ContentPage from "./pages/ContentPage";
+import AnalyticsPage from './pages/AnalyticsPage'; // Import AnalyticsPage
+
 const App = () => {
   const [darkMode, setDarkMode] = useState(true);
 
@@ -56,6 +57,7 @@ const AppWithRouter = () => {
           <Route path="/history" element={<History />} />
           <Route path="/playlists" element={<Playlists />} />
           <Route path="/content" element={<ContentPage />} />
+          <Route path="/yourvideos/analytics" element={<AnalyticsPage />} /> {/* Add AnalyticsPage Route */}
 
         </Route>
 
@@ -66,7 +68,7 @@ const AppWithRouter = () => {
             <>
               <Navbar />
               <SideMenu1 />
-              <YourVideos />
+
             </>
           }
         />
