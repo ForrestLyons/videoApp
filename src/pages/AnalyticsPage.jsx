@@ -183,18 +183,19 @@ const InsightText = styled.div`
   color: ${({ theme }) => theme.textSoft};
 `;
 
+// Dummy data for graphs
 const data = [
-  { name: 'Mon', views: 2400, watchTime: 2400 },
-  { name: 'Tue', views: 1398, watchTime: 2210 },
-  { name: 'Wed', views: 9800, watchTime: 2290 },
-  { name: 'Thu', views: 3908, watchTime: 2000 },
-  { name: 'Fri', views: 4800, watchTime: 2181 },
-  { name: 'Sat', views: 3800, watchTime: 2500 },
-  { name: 'Sun', views: 4300, watchTime: 2100 },
+  { name: 'Mon', views: 2400, watchTime: 2400, subscribers: 50 },
+  { name: 'Tue', views: 1398, watchTime: 2210, subscribers: 30 },
+  { name: 'Wed', views: 9800, watchTime: 2290, subscribers: 40 },
+  { name: 'Thu', views: 3908, watchTime: 2000, subscribers: 35 },
+  { name: 'Fri', views: 4800, watchTime: 2181, subscribers: 45 },
+  { name: 'Sat', views: 3800, watchTime: 2500, subscribers: 20 },
+  { name: 'Sun', views: 4300, watchTime: 2100, subscribers: 25 },
 ];
 
 const AnalyticsPage = () => {
-  const [activeTab, setActiveTab] = useState("overview");
+  const [activeTab, setActiveTab] = useState("views");
   const [showDropdown, setShowDropdown] = useState(false);
   const [selectedRange, setSelectedRange] = useState("Last 28 days");
 
@@ -207,92 +208,56 @@ const AnalyticsPage = () => {
     setShowDropdown(false);
   };
 
-  const renderTabContent = () => {
+  const renderChart = () => {
+    let dataKey = "";
+    let chartTitle = "";
+
     switch (activeTab) {
-      case "overview":
-        return (
-          <>
-            {/* Performance Metrics */}
-            <Metrics>
-              <MetricCard>
-                <MetricTitle>Views</MetricTitle>
-                <MetricValue>24.5K</MetricValue>
-              </MetricCard>
-              <MetricCard>
-                <MetricTitle>Watch Time (hours)</MetricTitle>
-                <MetricValue>1.2K</MetricValue>
-              </MetricCard>
-              <MetricCard>
-                <MetricTitle>Subscribers</MetricTitle>
-                <MetricValue>350</MetricValue>
-              </MetricCard>
-            </Metrics>
-
-            {/* Graph Section */}
-            <ChartSection>
-              <GraphContainer>
-                <ResponsiveContainer width="100%" height="100%">
-                  <LineChart data={data}>
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="name" />
-                    <YAxis />
-                    <Tooltip />
-                    <Line type="monotone" dataKey="views" stroke="#8884d8" activeDot={{ r: 8 }} />
-                    <Line type="monotone" dataKey="watchTime" stroke="#82ca9d" />
-                  </LineChart>
-                </ResponsiveContainer>
-              </GraphContainer>
-
-              {/* Real-Time Stats */}
-              <RealTimeStats>
-                <StatItem>
-                  <StatLabel>Live Subscriber Count</StatLabel>
-                  <StatValue>350</StatValue>
-                </StatItem>
-                <StatItem>
-                  <StatLabel>Views in Last 48 Hours</StatLabel>
-                  <StatValue>1,200</StatValue>
-                </StatItem>
-                <SeeMoreButton>See More</SeeMoreButton>
-              </RealTimeStats>
-            </ChartSection>
-
-            {/* Insights */}
-            <Insights>
-              <InsightTitle>Key Insights</InsightTitle>
-              <InsightText>Your top performing videos have increased traffic from external sources by 15% this week.</InsightText>
-            </Insights>
-          </>
-        );
-      case "content":
-        return <p>Content analytics go here.</p>;
-      case "audience":
-        return <p>Audience analytics go here.</p>;
-      case "inspiration":
-        return <p>Inspiration/research analytics go here.</p>;
+      case "views":
+        dataKey = "views";
+        chartTitle = "Views";
+        break;
+      case "watchTime":
+        dataKey = "watchTime";
+        chartTitle = "Watch Time (Hours)";
+        break;
+      case "subscribers":
+        dataKey = "subscribers";
+        chartTitle = "Subscribers";
+        break;
       default:
-        return null;
+        dataKey = "views";
+        chartTitle = "Views";
     }
+
+    return (
+      <ResponsiveContainer width="100%" height="100%">
+        <LineChart data={data}>
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="name" />
+          <YAxis />
+          <Tooltip />
+          <Line type="monotone" dataKey={dataKey} stroke="#8884d8" activeDot={{ r: 8 }} />
+        </LineChart>
+      </ResponsiveContainer>
+    );
   };
 
   return (
     <Container>
       <Title>Channel Analytics</Title>
 
-      {/* Tabs and Time Picker */}
+      {/* Tabs for selecting the metric */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <TabsContainer>
-          <Tab active={activeTab === "overview"} onClick={() => setActiveTab("overview")}>
-            Overview
+          <Tab active={activeTab === "views"} onClick={() => setActiveTab("views")}>
+            Views
           </Tab>
-          <Tab active={activeTab === "content"} onClick={() => setActiveTab("content")}>
-            Content
+          <Tab active={activeTab === "watchTime"} onClick={() => setActiveTab("watchTime")}>
+            Watch Time (Hours)
           </Tab>
-          <Tab active={activeTab === "audience"} onClick={() => setActiveTab("audience")}>
-            Audience
-          </Tab>
-          <Tab active={activeTab === "inspiration"} onClick={() => setActiveTab("inspiration")}>
-            Inspiration
+          <Tab active={activeTab === "subscribers"} onClick={() => setActiveTab("subscribers")}>
+            Subscribers
           </Tab>
         </TabsContainer>
 
@@ -313,8 +278,31 @@ const AnalyticsPage = () => {
         </TimePickerContainer>
       </div>
 
-      {/* Tab Content */}
-      <TabContent>{renderTabContent()}</TabContent>
+      {/* Chart and Real-Time Stats */}
+      <ChartSection>
+        <GraphContainer>
+          {renderChart()}
+        </GraphContainer>
+
+        {/* Real-Time Stats */}
+        <RealTimeStats>
+          <StatItem>
+            <StatLabel>Live Subscriber Count</StatLabel>
+            <StatValue>350</StatValue>
+          </StatItem>
+          <StatItem>
+            <StatLabel>Views in Last 48 Hours</StatLabel>
+            <StatValue>1,200</StatValue>
+          </StatItem>
+          <SeeMoreButton>See More</SeeMoreButton>
+        </RealTimeStats>
+      </ChartSection>
+
+      {/* Insights */}
+      <Insights>
+        <InsightTitle>Key Insights</InsightTitle>
+        <InsightText>Your top performing videos have increased traffic from external sources by 15% this week.</InsightText>
+      </Insights>
     </Container>
   );
 };

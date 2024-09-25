@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { ThemeProvider } from "styled-components";
-import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom"; // Correctly importing useLocation
+import { BrowserRouter, Routes, Route, useLocation, Outlet } from "react-router-dom";
 import MainLayout from "./MainLayout";
 import Home from "./pages/Home";
 import Video from "./pages/Video";
@@ -17,7 +17,22 @@ import Dashboard from "./components/Dashboard";
 import Menu from './components/Menu'; // Main menu
 import SideMenu1 from './components/SideMenu1'; // Side menu for 'Your Videos'
 import ContentPage from "./pages/ContentPage";
-import AnalyticsPage from './pages/AnalyticsPage'; // Import AnalyticsPage
+import AnalyticsPage from './pages/AnalyticsPage';
+import CommentsPage from "./pages/CommentsPage";
+import Subtitles from "./pages/Subtitles";  // Import the Subtitles page
+import CopyrightPage from "./pages/CopyrightPage"; // Import the new CopyrightPage
+import EarnPage from "./pages/EarnPage"; // Import the Earn page
+import CustomizationPage from "./pages/CustomizationPage";
+// New YourVideosLayout component
+const YourVideosLayout = () => {
+  return (
+    <>
+      <Navbar />
+      <SideMenu1 />
+      <Outlet />
+    </>
+  );
+};
 
 const App = () => {
   const [darkMode, setDarkMode] = useState(true);
@@ -37,7 +52,6 @@ const AppWithRouter = () => {
 
   // Define the paths where you want to hide the Menu
   const hideMenuRoutes = ["/yourvideos", "/yourvideos/dashboard", "/yourvideos/content", "/yourvideos/analytics", "/yourvideos/comments"];
-
   const shouldHideMenu = hideMenuRoutes.some(route => location.pathname.startsWith(route));
 
   return (
@@ -56,45 +70,20 @@ const AppWithRouter = () => {
           <Route path="/yourchannel" element={<YourChannel />} />
           <Route path="/history" element={<History />} />
           <Route path="/playlists" element={<Playlists />} />
-          <Route path="/content" element={<ContentPage />} />
-          <Route path="/yourvideos/analytics" element={<AnalyticsPage />} /> {/* Add AnalyticsPage Route */}
-
+          <Route path="/comments" element={<CommentsPage />} />
         </Route>
 
-        {/* Routes for 'Your Videos' and subpages */}
-        <Route
-          path="/yourvideos"
-          element={
-            <>
-              <Navbar />
-              <SideMenu1 />
-
-            </>
-          }
-        />
-        <Route
-          path="/yourvideos/dashboard"
-          element={
-            <>
-              <Navbar />
-              <SideMenu1 />
-              <Dashboard />
-            </>
-          }
-        />
-        {/* Add more routes for the other subpages */}
-        <Route
-          path="/yourvideos/content"
-          element={
-            <>
-              <Navbar />
-              <SideMenu1 />
-              <ContentPage />
-              {/* Content Page Component */}
-            </>
-          }
-        />
-        {/* Add more subpages as needed */}
+        {/* Your Videos Section */}
+        <Route path="/yourvideos" element={<YourVideosLayout />}>
+          <Route path="dashboard" element={<Dashboard />} />
+          <Route path="content" element={<ContentPage />} />
+          <Route path="analytics" element={<AnalyticsPage />} />
+          <Route path="comments" element={<CommentsPage />} />
+          <Route path="subtitles" element={<Subtitles />} />
+          <Route path="copyright" element={<CopyrightPage />} />
+          <Route path="earn" element={<EarnPage />} />
+          <Route path="customization" element={<CustomizationPage />} />
+        </Route>
       </Routes>
     </>
   );

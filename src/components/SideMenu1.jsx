@@ -143,6 +143,24 @@ const SideMenu1 = () => {
         </MenuIconWrapper>
         <MenuText collapsed={collapsed}>Subtitles</MenuText>
       </MenuItem>
+      <MenuItem onClick={() => navigate("/yourvideos/copyright")}>
+        <MenuIconWrapper collapsed={collapsed}>
+          <SubtitlesIcon />
+        </MenuIconWrapper>
+        <MenuText collapsed={collapsed}>Copyright</MenuText>
+      </MenuItem>
+      <MenuItem onClick={() => navigate("/yourvideos/earn")}>
+        <MenuIconWrapper collapsed={collapsed}>
+          <SubtitlesIcon />
+        </MenuIconWrapper>
+        <MenuText collapsed={collapsed}>Earn</MenuText>
+      </MenuItem>
+      <MenuItem onClick={() => navigate("/yourvideos/customization")}>
+        <MenuIconWrapper collapsed={collapsed}>
+          <SubtitlesIcon />
+        </MenuIconWrapper>
+        <MenuText collapsed={collapsed}>Customization</MenuText>
+      </MenuItem>
       {/* Add other menu items here */}
     </SideMenuContainer>
   );
