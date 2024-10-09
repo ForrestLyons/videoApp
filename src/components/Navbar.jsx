@@ -1,12 +1,11 @@
 import React, { useState } from "react";
-import {  useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import SearchIcon from "@mui/icons-material/Search";
 import VideoCallIcon from "@mui/icons-material/VideoCall";
-import { Menu, MenuItem } from "@mui/material"; // Ensure you import Menu and MenuItem from Material UI
-
-import AppsIcon from "@mui/icons-material/Apps";
+import { Menu, MenuItem } from "@mui/material";
 import NotificationsIcon from "@mui/icons-material/Notifications";
+import NotificationsList from "./NotificationCard"; // Import NotificationsList correctly
 import Avatar from "@mui/icons-material/AccountCircle";
 
 const Container = styled.div`
@@ -63,20 +62,46 @@ const Icons = styled.div`
 
 const Navbar = () => {
   const [anchorEl, setAnchorEl] = useState(null);
+  const [showNotifications, setShowNotifications] = useState(false);
   const navigate = useNavigate();
 
   const handleVideoCallClick = (event) => {
-    setAnchorEl(event.currentTarget); // Open dropdown menu
+    setAnchorEl(event.currentTarget);
   };
 
   const handleClose = () => {
-    setAnchorEl(null); // Close dropdown menu
+    setAnchorEl(null);
   };
+
+  const handleNotificationClick = () => {
+    setShowNotifications((prev) => !prev);
+  };
+
+  const notifications = [
+    {
+      notificationId: "1",
+      profilePic: "path/to/profile1.jpg",
+      channelName: "Channel 1",
+      tags: "#cool #tech",
+      thumbnail: "path/to/video1.jpg",
+      timestamp: "2 days ago",
+    },
+    {
+      notificationId: "2",
+      profilePic: "path/to/profile2.jpg",
+      channelName: "Channel 2",
+      tags: "#funny #vlog",
+      thumbnail: "path/to/video2.jpg",
+      timestamp: "1 day ago",
+    },
+    // Add more notifications as needed
+  ];
 
   const handleUploadClick = () => {
     handleClose();
     navigate("/content?upload=true");
-   }; // Route to Content page with upload modal
+  };
+
   return (
     <Container>
       <Logo>
@@ -89,9 +114,10 @@ const Navbar = () => {
       </Search>
       <Icons>
         <VideoCallIcon
-        aria-controls="video-call-menu"
-        aria-haspopup="true"
-        onClick={handleVideoCallClick} />
+          aria-controls="video-call-menu"
+          aria-haspopup="true"
+          onClick={handleVideoCallClick}
+        />
         <Menu
           id="video-call-menu"
           anchorEl={anchorEl}
@@ -102,8 +128,11 @@ const Navbar = () => {
           <MenuItem onClick={handleClose}>Go Live</MenuItem>
           <MenuItem onClick={handleClose}>Create Post</MenuItem>
         </Menu>
-        <AppsIcon />
-        <NotificationsIcon />
+
+        <NotificationsIcon onClick={handleNotificationClick} />
+        {showNotifications && (
+          <NotificationsList notifications={notifications} />
+        )}
         <Avatar />
       </Icons>
     </Container>

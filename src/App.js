@@ -65,6 +65,8 @@ const AppWithRouter = () => {
           <Route path="/signin" element={<SignIn />} />
           <Route path="/video/:id" element={<Video />} />
           <Route path="/shorts" element={<Shorts />} />
+          <Route path="/shorts/:id" element={<Shorts />} />
+
           <Route path="/subscriptions" element={<Subscriptions />} />
           <Route path="/you" element={<YouProfile />} />
           <Route path="/yourchannel" element={<YourChannel />} />
