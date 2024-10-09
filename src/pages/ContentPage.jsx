@@ -1,8 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState,useRef } from "react";
+import { useLocation } from "react-router-dom";
+import Modal from "@mui/material/Modal"; // Material UI for modal
 import styled from "styled-components";
 import { NavLink } from "react-router-dom";
 import FilterListIcon from "@mui/icons-material/FilterList";
+import CloseIcon from "@mui/icons-material/Close"; // Close button icon
 
+// Styled Components
 const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -178,10 +182,42 @@ const UploadButton = styled.button`
   }
 `;
 
+const modalStyle = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 1000,
+  height: 750,
+  backgroundColor: "#fff",
+  padding: "20px",
+  borderRadius: "10px",
+  boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
+};
+
 const ContentPage = () => {
   const [hasContent, setHasContent] = useState(false); // Placeholder logic for content
   const [showDropdown, setShowDropdown] = useState(false); // State for controlling dropdown visibility
   const [filterText, setFilterText] = useState("");
+  const [openModal, setOpenModal] = useState(false);
+  const location = useLocation();
+
+  const fileInputRef = useRef(null);
+
+  // Handle opening the file explorer when selecting files
+  const handleFileClick = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
+    }
+  };
+  // Handle opening the file explorer when selecting files
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      console.log("File selected:", file.name);
+      // Handle file upload logic here
+    }
+  };
 
   const handleInputClick = () => {
     setShowDropdown(true); // Show dropdown when input is clicked
@@ -190,6 +226,18 @@ const ContentPage = () => {
   const handleDropdownItemClick = (option) => {
     setFilterText(option); // Set the input value to the clicked option
     setShowDropdown(false); // Close the dropdown after selection
+  };
+
+  useEffect(() => {
+    // Check if query string contains "upload=true" to open the modal
+    const searchParams = new URLSearchParams(location.search);
+    if (searchParams.get("upload") === "true") {
+      setOpenModal(true);
+    }
+  }, [location]);
+
+  const handleClose = () => {
+    setOpenModal(false);
   };
 
   const filterOptions = [
@@ -223,7 +271,7 @@ const ContentPage = () => {
         <FilterInput
           type="text"
           placeholder="Filter"
-          autocomplete="off"
+          autoComplete="off"
           value={filterText}
           onClick={handleInputClick}
           onChange={(e) => setFilterText(e.target.value)}
@@ -260,6 +308,33 @@ const ContentPage = () => {
           <span>Likes (vs. dislikes)</span>
         </RightSection>
       </FilterLinks>
+
+      {/* Modal for uploading files */}
+      <Modal
+        open={openModal}
+        onClose={handleClose}
+        BackdropProps={{
+          onClick: (e) => e.stopPropagation(), // Prevent closing when clicking outside
+        }}
+      >
+        <div style={modalStyle}>
+          <div style={{ display: "flex", justifyContent: "space-between" }}>
+            <h2>Upload Videos</h2>
+            <CloseIcon
+              style={{ cursor: "pointer" }}
+              onClick={handleClose} // Close the modal on "X" click
+            />
+          </div>
+          <p>Drag and drop video files to upload</p>
+          <input
+            type="file"
+            ref={fileInputRef}
+            style={{ display: "none" }}
+            onChange={handleFileChange}
+          />
+          <button onClick={handleFileClick}>Select files</button>
+        </div>
+      </Modal>
 
       {/* No Content Section */}
       {!hasContent ? (

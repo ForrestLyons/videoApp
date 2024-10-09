@@ -1,7 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
+import {  useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import SearchIcon from "@mui/icons-material/Search";
 import VideoCallIcon from "@mui/icons-material/VideoCall";
+import { Menu, MenuItem } from "@mui/material"; // Ensure you import Menu and MenuItem from Material UI
+
 import AppsIcon from "@mui/icons-material/Apps";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import Avatar from "@mui/icons-material/AccountCircle";
@@ -59,6 +62,21 @@ const Icons = styled.div`
 `;
 
 const Navbar = () => {
+  const [anchorEl, setAnchorEl] = useState(null);
+  const navigate = useNavigate();
+
+  const handleVideoCallClick = (event) => {
+    setAnchorEl(event.currentTarget); // Open dropdown menu
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null); // Close dropdown menu
+  };
+
+  const handleUploadClick = () => {
+    handleClose();
+    navigate("/content?upload=true");
+   }; // Route to Content page with upload modal
   return (
     <Container>
       <Logo>
@@ -70,7 +88,20 @@ const Navbar = () => {
         <SearchIcon />
       </Search>
       <Icons>
-        <VideoCallIcon />
+        <VideoCallIcon
+        aria-controls="video-call-menu"
+        aria-haspopup="true"
+        onClick={handleVideoCallClick} />
+        <Menu
+          id="video-call-menu"
+          anchorEl={anchorEl}
+          open={Boolean(anchorEl)}
+          onClose={handleClose}
+        >
+          <MenuItem onClick={handleUploadClick}>Upload Video</MenuItem>
+          <MenuItem onClick={handleClose}>Go Live</MenuItem>
+          <MenuItem onClick={handleClose}>Create Post</MenuItem>
+        </Menu>
         <AppsIcon />
         <NotificationsIcon />
         <Avatar />

@@ -71,6 +71,8 @@ const AppWithRouter = () => {
           <Route path="/history" element={<History />} />
           <Route path="/playlists" element={<Playlists />} />
           <Route path="/comments" element={<CommentsPage />} />
+          <Route path="/content" element={<ContentPage />} />
+
         </Route>
 
         {/* Your Videos Section */}
