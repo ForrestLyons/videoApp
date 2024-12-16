@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import Avatar from "@mui/icons-material/AccountCircle";
 import Button from "@mui/material/Button";
+import { Link } from "react-router-dom"; // Import Link from react-router-dom
 
 const Container = styled.div`
   display: flex;
@@ -30,12 +31,13 @@ const Profiles = styled.div`
   justify-content: space-between;
 `;
 
-const Profile = styled.div`
+const Profile = styled(Link)` // Use Link for navigation
   display: flex;
   flex-direction: column;
   align-items: center;
   width: calc(20% - 20px);
   margin-bottom: 20px;
+  text-decoration: none; // Remove underline for links
 `;
 
 const ProfileImage = styled(Avatar)`
@@ -60,16 +62,16 @@ const Subscriptions = () => {
     {
       name: "Beauty and Fashion",
       profiles: [
-        { name: "Channel 1", followers: "1.2M", img: "/path/to/profile1.jpg" },
-        { name: "Channel 2", followers: "823K", img: "/path/to/profile2.jpg" },
-        { name: "Channel 3", followers: "300K", img: "/path/to/profile3.jpg" },
-        { name: "Channel 4", followers: "500K", img: "/path/to/profile4.jpg" },
-        { name: "Channel 5", followers: "1M", img: "/path/to/profile5.jpg" },
-        { name: "Channel 6", followers: "2M", img: "/path/to/profile6.jpg" },
-        { name: "Channel 7", followers: "1.2M", img: "/path/to/profile7.jpg" },
-        { name: "Channel 8", followers: "1.8M", img: "/path/to/profile8.jpg" },
-        { name: "Channel 9", followers: "900K", img: "/path/to/profile9.jpg" },
-        { name: "Channel 10", followers: "750K", img: "/path/to/profile10.jpg" },
+        { name: "Channel1", followers: "1.2M", img: "/path/to/profile1.jpg" },
+        { name: "Channel2", followers: "823K", img: "/path/to/profile2.jpg" },
+        { name: "Channel3", followers: "300K", img: "/path/to/profile3.jpg" },
+        { name: "Channel4", followers: "500K", img: "/path/to/profile4.jpg" },
+        { name: "Channel5", followers: "1M", img: "/path/to/profile5.jpg" },
+        { name: "Channel6", followers: "2M", img: "/path/to/profile6.jpg" },
+        { name: "Channel7", followers: "1.2M", img: "/path/to/profile7.jpg" },
+        { name: "Channel8", followers: "1.8M", img: "/path/to/profile8.jpg" },
+        { name: "Channel9", followers: "900K", img: "/path/to/profile9.jpg" },
+        { name: "Channel10", followers: "750K", img: "/path/to/profile10.jpg" },
       ],
     },
     // Add other categories similarly
@@ -81,15 +83,17 @@ const Subscriptions = () => {
         <Category key={index}>
           <CategoryTitle>{category.name}</CategoryTitle>
           <Profiles>
-            {category.profiles.slice(0, showMore ? category.profiles.length : 10).map((profile, index) => (
-              <Profile key={index}>
-                <ProfileImage src={profile.img} alt={profile.name} />
-                <FollowerCount>{profile.followers}</FollowerCount>
-                <Button variant="contained" color="primary">
-                  Subscribe
-                </Button>
-              </Profile>
-            ))}
+            {category.profiles
+              .slice(0, showMore ? category.profiles.length : 10)
+              .map((profile, index) => (
+                <Profile key={index} to={`/@${profile.name}`}> {/* Add dynamic path */}
+                  <ProfileImage src={profile.img} alt={profile.name} />
+                  <FollowerCount>{profile.followers}</FollowerCount>
+                  <Button variant="contained" color="primary">
+                    Subscribe
+                  </Button>
+                </Profile>
+              ))}
           </Profiles>
           {category.profiles.length > 10 && (
             <ShowMoreButton onClick={() => setShowMore(!showMore)}>

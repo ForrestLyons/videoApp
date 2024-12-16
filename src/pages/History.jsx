@@ -120,14 +120,14 @@ const History = () => {
       date: "Today",
       entries: [
         {
-          title: "Video 1",
+          title: "Today's Short 1",
           channel: "Channel 1",
           views: "1.2M views",
           tags: ["tag1", "tag2"],
           thumbnail: "https://via.placeholder.com/150",
         },
         {
-          title: "Video 2",
+          title: "Today's Short 2",
           channel: "Channel 2",
           views: "823K views",
           tags: ["tag3", "tag4"],
@@ -148,7 +148,7 @@ const History = () => {
       ],
     },
     {
-      date: "August 1",
+      date: "Older",
       entries: [
         {
           title: "Video 4",

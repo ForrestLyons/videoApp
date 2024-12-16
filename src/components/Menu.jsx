@@ -254,14 +254,19 @@ const Menu = ({ darkMode, setDarkMode }) => {
                 Your Videos
               </Item>
             </Link>
-            <Item>
-              <WatchLaterIcon />
+
+            <Link to="/watchlater" style={{ textDecoration: "none", color: "inherit" }}>
+              <Item>
+                <WatchLaterIcon />
               Watch Later
             </Item>
+            </Link>
+            <Link to="/likedvideos" style={{ textDecoration: "none", color: "inherit" }}>
             <Item>
               <ThumbUpIcon />
-              Liked Videos
+
             </Item>
+            </Link>
             <Hr />
             <Item onClick={() => setDarkMode(!darkMode)}>
               {darkMode ? "Light Mode" : "Dark Mode"}

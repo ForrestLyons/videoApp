@@ -1,4 +1,3 @@
-// Playlists.jsx
 import React, { useState } from "react";
 import styled from "styled-components";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
@@ -58,7 +57,7 @@ const PlaylistContainer = styled.div`
 `;
 
 const PlaylistCardWrapper = styled.div`
-  flex: 0 0 calc(25% - 15px); /* Four cards across with spacing */
+  flex: 0 0 calc(25% - 15px);
   margin-bottom: 20px;
   position: relative;
 `;
@@ -66,7 +65,7 @@ const PlaylistCardWrapper = styled.div`
 const PlaylistCard = styled.div`
   position: relative;
   width: 100%;
-  padding-top: 56.25%; /* Aspect ratio 16:9 */
+  padding-top: 56.25%;
   border-radius: 10px;
   background-color: ${({ theme }) => theme.bgLighter};
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -122,6 +121,13 @@ const ViewFullPlaylist = styled.div`
   }
 `;
 
+const NoVideoMessage = styled.div`
+  font-size: 16px;
+  color: ${({ theme }) => theme.textSoft};
+  text-align: center;
+  margin-top: 20px;
+`;
+
 const Playlists = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [filter, setFilter] = useState("Recently Added");
@@ -146,12 +152,18 @@ const Playlists = () => {
       image: "https://via.placeholder.com/250x140",
     },
     {
-      title: "Recent Artist",
-      videos: 15,
+      title: "Music",
+      videos: 0,
       privacy: "Public",
       image: "https://via.placeholder.com/250x140",
     },
   ];
+
+  const filteredPlaylists = playlists.filter((playlist) =>
+    filter === "Recently Added"
+      ? true
+      : playlist.title.toLowerCase().includes(filter.toLowerCase())
+  );
 
   return (
     <Container>
@@ -167,7 +179,7 @@ const Playlists = () => {
         </DropdownMenu>
       </FilterBar>
       <PlaylistContainer>
-        {playlists.map((playlist, index) => (
+        {filteredPlaylists.map((playlist, index) => (
           <PlaylistCardWrapper key={index}>
             <PlaylistCard>
               <StackedThumbnail image={playlist.image}>
@@ -179,7 +191,11 @@ const Playlists = () => {
               <PlaylistDetails>
                 {playlist.privacy} • Playlist
               </PlaylistDetails>
-              <ViewFullPlaylist>View full playlist</ViewFullPlaylist>
+              {playlist.videos === 0 ? (
+                <NoVideoMessage>No videos in this playlist</NoVideoMessage>
+              ) : (
+                <ViewFullPlaylist>View full playlist</ViewFullPlaylist>
+              )}
             </PlaylistInfo>
           </PlaylistCardWrapper>
         ))}

@@ -99,6 +99,17 @@ const ProfileName = styled.div`
   color: ${({ theme }) => theme.text};
 `;
 
+const RecommendedContainer = styled.div`
+  width: 100%;
+  max-width: 600px;
+  margin-top: 20px;
+`;
+
+const RecommendedHeader = styled.h3`
+  color: ${({ theme }) => theme.text};
+  margin-bottom: 10px;
+`;
+
 const Shorts = () => {
   const [showMoreOptions, setShowMoreOptions] = useState(false);
 
@@ -106,8 +117,15 @@ const Shorts = () => {
     setShowMoreOptions(!showMoreOptions);
   };
 
+  const recommendedShorts = [
+    { id: 1, title: "Funny Cat Video", src: "/path/to/video1.mp4" },
+    { id: 2, title: "Amazing Stunts", src: "/path/to/video2.mp4" },
+    { id: 3, title: "Tech Tips", src: "/path/to/video3.mp4" },
+  ];
+
   return (
     <Container>
+      {/* Main Short */}
       <VideoCard>
         <Video />
         <Actions>
@@ -162,6 +180,20 @@ const Shorts = () => {
           <ProfileName>Channel Name</ProfileName>
         </Profile>
       </VideoCard>
+
+      {/* Recommended Shorts */}
+      <RecommendedContainer>
+        <RecommendedHeader>Recommended Shorts</RecommendedHeader>
+        {recommendedShorts.map((short) => (
+          <VideoCard key={short.id}>
+            <Video />
+            <Profile>
+              <ProfileImage />
+              <ProfileName>{short.title}</ProfileName>
+            </Profile>
+          </VideoCard>
+        ))}
+      </RecommendedContainer>
     </Container>
   );
 };

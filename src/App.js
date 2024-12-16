@@ -23,6 +23,8 @@ import Subtitles from "./pages/Subtitles";  // Import the Subtitles page
 import CopyrightPage from "./pages/CopyrightPage"; // Import the new CopyrightPage
 import EarnPage from "./pages/EarnPage"; // Import the Earn page
 import CustomizationPage from "./pages/CustomizationPage";
+import WatchLater from "./pages/WatchLater";
+import LikedVideos from "./pages/LikedVideos";
 // New YourVideosLayout component
 const YourVideosLayout = () => {
   return (
@@ -74,6 +76,8 @@ const AppWithRouter = () => {
           <Route path="/playlists" element={<Playlists />} />
           <Route path="/comments" element={<CommentsPage />} />
           <Route path="/content" element={<ContentPage />} />
+          <Route path="/watchlater" element={<WatchLater />} />
+          <Route path="/likedvideos" element={<LikedVideos />} />
 
         </Route>
 
