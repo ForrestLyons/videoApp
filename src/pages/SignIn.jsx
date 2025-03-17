@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
-
+import { jwtDecode } from "jwt-decode";
 const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -64,6 +64,35 @@ const Link = styled.span`
 `;
 
 const SignIn = () => {
+  useEffect(() => {
+    // Load the Google API script
+    const script = document.createElement("script");
+    script.src = "https://accounts.google.com/gsi/client";
+    script.async = true;
+    document.body.appendChild(script);
+
+    script.onload = () => {
+      window.google.accounts.id.initialize({
+        client_id: "935444947730-ariht8o61pqq78qjq8q2cipqrjp68dh8.apps.googleusercontent.com",
+        callback: handleCredentialResponse,
+      });
+      window.google.accounts.id.renderButton(
+        document.getElementById("google-signin-button"),
+        { theme: "outline", size: "large" }
+      );
+    };
+  }, []);
+
+  const handleCredentialResponse = (response) => {
+    console.log("Encoded JWT ID token: " + response.credential);
+
+    // Decode the token if needed (use a library like jwt-decode)
+    const decodedToken = jwtDecode(response.credential);
+    console.log("Decoded Token: ", decodedToken);
+
+    // Process the user information (e.g., store in your database or authenticate)
+  };
+
   return (
     <Container>
       <Wrapper>
@@ -73,6 +102,7 @@ const SignIn = () => {
         <Input type="password" placeholder="password" />
         <Button>Sign in</Button>
         <Title>or</Title>
+        <div id="google-signin-button"></div>
         <Input placeholder="username" />
         <Input placeholder="email" />
         <Input type="password" placeholder="password" />
